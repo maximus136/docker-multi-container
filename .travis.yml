@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t maximus136/docker-multi-react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run maximus136/docker-multi-react npm test -e CI=true
+
+after_success:
+  - docker build -t maximus136/docker-multi-client ./client
+  - docker build -t maximus136/docker-multi-server ./server
+  - docker build -t maximus136/docker-multi-nginx ./nginx
+  - docker build -t maximus136/docker-multi-worker ./worker
+  # Login to docker CLI
+  # Take these images and push to docker hub.
