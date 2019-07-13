@@ -6,7 +6,7 @@ before_install:
   - docker build -t maximus136/docker-multi-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run maximus136/docker-multi-react CI=true npm test
+  - docker run maximus136/docker-multi-react npm test
 
 after_success:
   - docker build -t maximus136/docker-multi-client ./client
