@@ -11,7 +11,12 @@ script:
 after_success:
   - docker build -t maximus136/docker-multi-client ./client
   - docker build -t maximus136/docker-multi-server ./server
-  - docker build -t maximus136/docker-multi-nginx ./nginx
+  - docker build -t  maximus136/docker-multi-nginx ./nginx
   - docker build -t maximus136/docker-multi-worker ./worker
-  # Login to docker CLI
+  # Login to docker CLI. take pwd env variable and pass as argument to the command following the pipe.
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take these images and push to docker hub.
+  - docker push maximus136/docker-multi-client
+  - docker push maximus136/docker-multi-server
+  - docker push maximus136/docker-multi-nginx
+  - docker push maximus136/docker-multi-worker
